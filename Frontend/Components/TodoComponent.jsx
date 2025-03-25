@@ -13,7 +13,7 @@ const TodoComponent = () => {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const getTodo = await axios.get("/todo/get", { withCredentials: true });
+        const getTodo = await axios.get("https://todo-app-7i4k.onrender.com/todo/get", { withCredentials: true });
         console.log(getTodo.data.TODOS);
         
         setTodoContent(getTodo.data.TODOS);
@@ -32,7 +32,7 @@ const TodoComponent = () => {
 
     try {
       const newTodo = { heading: newTask };
-      const res = await axios.post("/todo/create", newTodo, { withCredentials: true });
+      const res = await axios.post("https://todo-app-7i4k.onrender.com/todo/create", newTodo, { withCredentials: true });
 
       if (res.data.success) {
         setTodoContent((prevTodos) => [...prevTodos, { _id: res.data._id, heading: newTask.trim() }]);
@@ -54,7 +54,7 @@ const TodoComponent = () => {
     if (!updatedText.trim()) return;
 
     try {
-      await axios.put(`/todo/update/${id}`, { heading: updatedText }, { withCredentials: true });
+      await axios.put(`https://todo-app-7i4k.onrender.com/todo/update/${id}`, { heading: updatedText }, { withCredentials: true });
 
       setTodoContent(todoContent.map((todo) => (todo._id === id ? { ...todo, heading: updatedText } : todo)));
 
@@ -67,7 +67,7 @@ const TodoComponent = () => {
   // Delete a todo
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`/todo/delete/${id}`, { withCredentials: true });
+      await axios.delete(`https://todo-app-7i4k.onrender.com/todo/delete/${id}`, { withCredentials: true });
       setTodoContent(todoContent.filter((todo) => todo._id !== id));
     } catch (error) {
       console.log(`Error in delete todo: ${error.message}`);
