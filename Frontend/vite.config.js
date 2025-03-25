@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  base: '/',
   plugins: [react(), tailwindcss()],
   build: {
     outDir: 'dist',
@@ -20,6 +21,6 @@ export default defineConfig({
         secure: false
       }
     },
-    historyApiFallback: true, // Ensures React Router works on Render
+    historyApiFallback: true,
   }
 });
