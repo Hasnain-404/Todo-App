@@ -13,7 +13,7 @@ const TodoComponent = () => {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const getTodo = await axios.get("/todo/get", { withCredentials: true });
+        const getTodo = await axios.get("https://todo-app-7i4k.onrender.com/todo/get", { withCredentials: true });
         console.log(getTodo.data.TODOS);
         
         setTodoContent(getTodo.data.TODOS);
