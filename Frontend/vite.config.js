@@ -1,8 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
+  build: {
+    outDir: 'dist',
+  },
   server: {
     proxy: {
       "/auth": {
@@ -15,10 +18,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: false
       }
-    }
+    },
+    historyApiFallback: true, // Ensures React Router works on Render
   }
-,
-  plugins: [react(),
-  tailwindcss()
-  ],
-})
+});
