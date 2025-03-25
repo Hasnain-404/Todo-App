@@ -10,9 +10,15 @@ export default defineConfig({
         target: "https://todo-app-7i4k.onrender.com",
         changeOrigin: true,
         secure: false
+      },
+      "/todo": {  // Add this to proxy todo-related requests
+        target: "https://todo-app-7i4k.onrender.com",
+        changeOrigin: true,
+        secure: false
       }
     }
-  },
+  }
+,
   plugins: [react(),
   tailwindcss()
   ],

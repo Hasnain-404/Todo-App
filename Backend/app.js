@@ -7,6 +7,17 @@ import cors from "cors";
 import cookieParser from "cookie-parser"
 const app = express();
 
+import path from "path";
+
+// Serve frontend build folder
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/frontend/dist/index.html"));
+});
+
+
 dotenv.config();
 const PORT = process.env.PORT || 5000
 

@@ -6,14 +6,16 @@ const TodoComponent = () => {
   const [todoContent, setTodoContent] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [updatedText, setUpdatedText] = useState(""); 
+  const [updatedText, setUpdatedText] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const getTodo = await axios.get("https://todo-app-7i4k.onrender.com/todo/get", { withCredentials: true });
+        const getTodo = await axios.get("/todo/get", { withCredentials: true });
+        console.log(getTodo.data.TODOS);
+        
         setTodoContent(getTodo.data.TODOS);
       } catch (error) {
         if (error.message === "Request failed with status code 401") {
@@ -30,7 +32,7 @@ const TodoComponent = () => {
 
     try {
       const newTodo = { heading: newTask };
-      const res = await axios.post("http://localhost:3000/todo/create", newTodo, { withCredentials: true });
+      const res = await axios.post("/todo/create", newTodo, { withCredentials: true });
 
       if (res.data.success) {
         setTodoContent((prevTodos) => [...prevTodos, { _id: res.data._id, heading: newTask.trim() }]);
@@ -52,7 +54,7 @@ const TodoComponent = () => {
     if (!updatedText.trim()) return;
 
     try {
-      await axios.put(`http://localhost:3000/todo/update/${id}`, { heading: updatedText }, { withCredentials: true });
+      await axios.put(`/todo/update/${id}`, { heading: updatedText }, { withCredentials: true });
 
       setTodoContent(todoContent.map((todo) => (todo._id === id ? { ...todo, heading: updatedText } : todo)));
 
@@ -65,7 +67,7 @@ const TodoComponent = () => {
   // Delete a todo
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/todo/delete/${id}`, { withCredentials: true });
+      await axios.delete(`/todo/delete/${id}`, { withCredentials: true });
       setTodoContent(todoContent.filter((todo) => todo._id !== id));
     } catch (error) {
       console.log(`Error in delete todo: ${error.message}`);
@@ -93,8 +95,8 @@ const TodoComponent = () => {
         {/* Task List */}
         <div className="overflow-auto max-h-[calc(100vh-300px)]">
           <ul className="space-y-3">
-            {todoContent.map((todo) => (
-              <li key={todo._id} className="bg-white p-4 rounded-lg shadow-lg flex items-center justify-between border-b border-gray-200">
+            {todoContent.map((todo,idx) => (
+              <li key={idx} className="bg-white p-4 rounded-lg shadow-lg flex items-center justify-between border-b border-gray-200">
                 {editingId === todo._id ? (
                   <input
                     type="text"
