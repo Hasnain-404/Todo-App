@@ -10,8 +10,34 @@ const RegisterComponent = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     if (!name || !email || !password) {
+    //         setMessage("Please fill all the fields");
+    //         return;
+    //     }
+
+    //     const userInfo = { name, email, password };
+
+    //     try {
+    //         const res = await axios.post('/auth/register', userInfo);
+
+    //         if (res.data.success) {
+    //             setMessage(res.data.message);
+    //             navigate("/login");
+    //         } else {
+    //             setMessage(res.data.message);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during register: ", error.message);
+    //         setMessage("Register failed. Please try again.");
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Register button clicked!");
 
         if (!name || !email || !password) {
             setMessage("Please fill all the fields");
@@ -19,18 +45,22 @@ const RegisterComponent = () => {
         }
 
         const userInfo = { name, email, password };
+        console.log("Sending request...", userInfo);
 
         try {
-            const res = await axios.post('/auth/register', userInfo);
+            const res = await axios.post("https://todo-app-7i4k.onrender.com/auth/register", userInfo);
+            console.log("Response received:", res.data);
 
             if (res.data.success) {
+                console.log("Navigating to login page...");
                 setMessage(res.data.message);
                 navigate("/login");
             } else {
+                console.log("Registration failed:", res.data.message);
                 setMessage(res.data.message);
             }
         } catch (error) {
-            console.error("Error during register: ", error.message);
+            console.error("Error during register:", error);
             setMessage("Register failed. Please try again.");
         }
     };
