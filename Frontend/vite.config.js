@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/auth": {
-        target: "http://localhost:3000",
+        target: "https://todo-app-7i4k.onrender.com",
         changeOrigin: true,
         secure: false
       }
