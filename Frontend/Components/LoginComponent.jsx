@@ -27,7 +27,7 @@ const LoginComponent = () => {
         const userInfo = { email, password };
 
         try {
-            const res = await axios.post('/auth/login', userInfo);
+            const res = await axios.post('https://todo-app-7i4k.onrender.com/auth/login', userInfo);
 
             if (res.data.success) {
                 localStorage.setItem("username", res.data.username); 
