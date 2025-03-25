@@ -28,7 +28,12 @@ const registerUser = async (req, res) => {
             expiresIn: "1d"
         });
 
-        res.cookie('token', token);
+        res.cookie("token", token, {
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "None",
+        });
+        
 
 
         res.json({
@@ -61,7 +66,12 @@ const loginUser = async (req, res) => {
             expiresIn: "1d"
         });
 
-        res.cookie('token', token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "None",
+        });
+        
 
         res.json({
             success: true,

@@ -13,7 +13,7 @@ const TodoComponent = () => {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const getTodo = await axios.get("http://localhost:3000/todo/get", { withCredentials: true });
+        const getTodo = await axios.get("https://todo-app-7i4k.onrender.com/todo/get", { withCredentials: true });
         setTodoContent(getTodo.data.TODOS);
       } catch (error) {
         if (error.message === "Request failed with status code 401") {
