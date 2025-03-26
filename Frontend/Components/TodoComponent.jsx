@@ -15,7 +15,9 @@ const TodoComponent = () => {
       try {
         const getTodo = await axios.get("https://todo-app-7i4k.onrender.com/todo/get", { withCredentials: true });
         console.log(getTodo.data.TODOS);
-        
+        if (!getTodo.data.TODOS) {
+          localStorage.removeItem("username")
+        }
         setTodoContent(getTodo.data.TODOS);
       } catch (error) {
         if (error.message === "Request failed with status code 401") {
