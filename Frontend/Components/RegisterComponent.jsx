@@ -35,7 +35,7 @@ const RegisterComponent = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 shadow-lg rounded-lg w-80">
                 <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Register</h2>
                 <form onSubmit={handleSubmit}>
@@ -77,6 +77,15 @@ const RegisterComponent = () => {
                         Register
                     </button>
                 </form>
+                <div className="text-center mt-4 flex">
+                    <p className="text-gray-600">Already have an account?</p>
+                    <button
+                        onClick={() => navigate("/login")}
+                        className="px-3  text-blue-700 font-semibold rounded-md transition"
+                    >
+                        Login
+                    </button>
+                </div>
             </div>
         </div>
     );

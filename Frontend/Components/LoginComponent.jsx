@@ -10,43 +10,37 @@ const LoginComponent = () => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const username = localStorage.getItem("username");
-        if (username) {
-            navigate('/todo');
-        }
-    }, [navigate]);
+        const handleSubmit = async (e) => {
+            e.preventDefault();
 
-    const heandleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!email || !password) {
-            setMessage("Please fill all the fields");
-            return;
-        }
-
-        const userInfo = { email, password };
-
-        try {
-            const res = await axios.post('https://todo-app-7i4k.onrender.com/auth/login', userInfo);
-
-            if (res.data.success) {
-                localStorage.setItem("username", res.data.username); 
-                setMessage(res.data.message);
-                navigate("/todo"); 
-            } else {
-                setMessage(res.data.message);
+            if (!email || !password) {
+                setMessage("Please fill all the fields");
+                return;
             }
-        } catch (error) {
-            console.error("Error during login: ", error.message);
-            setMessage("Login failed. Please try again.");
-        }
-    }
+
+            const userInfo = { email, password };
+
+            try {
+                const res = await axios.post('https://todo-app-7i4k.onrender.com/auth/login', userInfo);
+
+                if (res.data.success) {
+                    setMessage(res.data.message);
+                    navigate("/todo");
+                } else {
+                    setMessage(res.data.message);
+                }
+            } catch (error) {
+                console.error("Error during login: ", error.message);
+                setMessage("Login failed. Please try again.");
+            }
+        };
+    }, []);
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 shadow-lg rounded-lg w-80">
                 <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Login</h2>
-                <form onSubmit={heandleSubmit}>
+                <form onSubmit={(e) => handleSubmit(e)}>
                     <div className="mb-4 flex items-center border border-gray-300 rounded-md p-2">
                         <FaEnvelope className="text-gray-500 mr-3 text-[20px]" />
                         <input
@@ -67,7 +61,7 @@ const LoginComponent = () => {
                             className="w-full p-2 text-gray-700 outline-none focus:border-blue-500"
                         />
                     </div>
-                    <div className=' text-xl ml-8 py-2.5'>{message}</div>
+                    <div className='text-xl ml-8 py-2.5'>{message}</div>
                     <button
                         type="submit"
                         className="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition"
@@ -75,6 +69,15 @@ const LoginComponent = () => {
                         Login
                     </button>
                 </form>
+                <div className="text-center mt-4 flex">
+                    <p className="text-gray-500">Don't have an account?</p>
+                    <button
+                        onClick={() => navigate("/register")}
+                        className="px-3  text-blue-700 font-semibold rounded-md transition"
+                    >
+                        Register
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -41,7 +41,7 @@ const TodoComponent = () => {
 
       if (res.data.success) {
         setTodoContent((prevTodos) => [...prevTodos, { _id: res.data._id, heading: newTask.trim() }]);
-        setNewTask(""); // Clear input field
+        setNewTask("");
       }
     } catch (error) {
       console.log(`Error in create in Frontend: ${error.message}`);
