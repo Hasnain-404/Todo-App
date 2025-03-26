@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
         const token = req.cookies.token;
 
         if (!token) {
-            return res.status(401).json({ success: false, message: "Unauthorized. Please log in." });
+            return res.json({ success: false, message: "Unauthorized. Please log in." });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
