@@ -17,6 +17,9 @@ const TodoComponent = () => {
         console.log(getTodo.data.TODOS);
         if (!getTodo.data.TODOS) {
           localStorage.removeItem("username")
+          console.log("username nhi hai");
+          
+          return navigate("login")
         }
         setTodoContent(getTodo.data.TODOS);
       } catch (error) {
