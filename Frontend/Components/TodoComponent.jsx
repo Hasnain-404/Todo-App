@@ -16,9 +16,6 @@ const TodoComponent = () => {
         const getTodo = await axios.get("https://todo-app-7i4k.onrender.com/todo/get", { withCredentials: true });
         console.log(getTodo.data.TODOS);
         if (!getTodo.data.TODOS) {
-          localStorage.removeItem("username")
-          console.log("username nhi hai");
-          
           return navigate("/login")
         }
         setTodoContent(getTodo.data.TODOS);

@@ -20,7 +20,8 @@ const LoginComponent = () => {
         const userInfo = { email, password };
 
         try {
-            const res = await axios.post('https://todo-app-7i4k.onrender.com/auth/login', userInfo);
+            const res = await axios.post('https://todo-app-7i4k.onrender.com/auth/login', userInfo, { withCredentials: true });
+
 
             if (res.data.success) {
                 setMessage(res.data.message);

@@ -29,11 +29,11 @@ const registerUser = async (req, res) => {
         });
 
         res.cookie("token", token, {
-            httpOnly: true, 
+            httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "None",
         });
-        
+
 
 
         res.json({
@@ -54,38 +54,49 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body;
         const isUser = await USER.findOne({ email });
 
-        const IsPasswordMatch = await bcrypt.compare(password, isUser.password)
-        if (!isUser || !IsPasswordMatch) {
-            return res.json({
+        // First, check if the user exists before comparing the password
+        if (!isUser) {
+            return res.status(401).json({
                 success: false,
-                message: "User not Found"
-            })
+                message: "User not found",
+            });
         }
 
+        // Now, check if the password matches
+        const isPasswordMatch = await bcrypt.compare(password, isUser.password);
+        if (!isPasswordMatch) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid credentials",
+            });
+        }
+
+        // Generate JWT Token
         const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, {
-            expiresIn: "1d"
+            expiresIn: "1d",
         });
 
+        // Set the cookie *before* sending JSON response
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "None",
+            secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+            sameSite: "None", // Required for cross-origin cookies
         });
-        
 
-        res.json({
+        // Send response after setting the cookie
+        return res.status(200).json({
             success: true,
             message: "Login Successfully!",
             username: isUser.name,
-            welcome: `Welcomebacke, ${isUser.name}`
-        })
+            welcome: `Welcome back, ${isUser.name}`,
+        });
 
     } catch (error) {
-        res.json({
+        return res.status(500).json({
             success: false,
-            message: `Error in login user: ${error.message}`
-        })
+            message: `Error in login user: ${error.message}`,
+        });
     }
-}
+};
 
 export { registerUser, loginUser }

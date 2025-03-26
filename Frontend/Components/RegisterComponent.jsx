@@ -21,7 +21,7 @@ const RegisterComponent = () => {
         const userInfo = { name, email, password };
 
         try {
-            const res = await axios.post("https://todo-app-7i4k.onrender.com/auth/register", userInfo);
+            const res = await axios.post("https://todo-app-7i4k.onrender.com/auth/register", userInfo, { withCredentials: true });
 
             if (res.data.success) {
                 setMessage(res.data.message);
